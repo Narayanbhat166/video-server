@@ -1,0 +1,149 @@
+body{
+    margin: 0px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    width: 90vw;
+    margin: 10px auto;
+    background: #ccc;
+}
+
+.video {
+    width: 100%;
+    height: 100%;
+}
+
+.c-video {
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    height: 100%;
+}
+
+.controls {
+    display: flex;
+    position: relative;
+    bottom: 40px;
+    width: 100%;
+    flex-wrap: nowrap;
+    height: 40px;
+    background: rgb(0,0,0);
+    flex-direction: row;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s linear 300ms,opacity 300ms;
+}
+
+.fa-play::before {
+    content: '\f04b';
+    width: 20px;
+    height: 30px;
+    font-size: 20px;
+    color: #fff;
+    display: inline-block;
+    font-family: 'Font Awesome 5 Free';
+    -webkit-font-smoothing: antialiased;
+    margin: 0px 4px;
+    line-height: 30px;
+}
+
+.fa-pause::before {
+    width: 20px;
+    height: 30px;
+    font-size: 20px;
+    color: #fff;
+    display: inline-block;
+    font-family: 'Font Awesome 5 Free';
+    -webkit-font-smoothing: antialiased;
+    margin: 0px 4px;
+    line-height: 30px;
+}
+
+.red-bar {
+    height: 5px;
+    width: 70%;
+    position: relative;
+    border: solid 1px rgba(255,255,255,0.2)
+}
+
+.red-juice {
+    height: inherit;
+    width: 0%;
+    transition: width 0.1s linear;
+    background-color: rgba(255,0,0,1);
+    position: absolute;
+    z-index:2;
+}
+
+.white-juice {
+    height: inherit;
+    width: 50%;
+    position: absolute;
+    transition: width 0.1s linear;
+    background-color: rgba(255,255,255,0.4);
+}
+
+.c-video:hover .controls {
+    visibility: visible;
+    opacity: 0.7;
+    transition: opacity 300ms;
+}
+
+.time-elapsed, .time-remaining {
+    color: #fff;
+    margin: 0px 7px;
+}
+
+.fa-volume-up::before {
+    width: 20px;
+    height: 30px;
+    font-size: 20px;
+    color: #fff;
+    display: inline-block;
+    font-family: 'Font Awesome 5 Free';
+    -webkit-font-smoothing: antialiased;
+    margin: 0px 4px;
+    line-height: 30px;
+}
+
+.fa-volume-down::before {
+    width: 20px;
+    height: 30px;
+    font-size: 20px;
+    color: #fff;
+    display: inline-block;
+    font-family: 'Font Awesome 5 Free';
+    -webkit-font-smoothing: antialiased;
+    margin: 0px 4px;
+    line-height: 30px;
+}
+
+i {
+    background: none;
+    border: 0px;
+    outline: 0px;
+    cursor: pointer;
+    margin: 0px 4px;
+    line-height: 30px;
+}
+
+.fa-cog::before {
+    width: 20px;
+    height: 30px;
+    font-size: 20px;
+    color: #fff;
+    display: inline-block;
+    font-family: 'Font Awesome 5 Free';
+    -webkit-font-smoothing: antialiased;
+    margin: 0px 4px;
+    line-height: 30px;
+}
+
+::-webkit-media-controls {
+    display:none !important;
+  }

@@ -1,0 +1,75 @@
+<html>
+
+<head>
+  <title>Video stream sample</title>
+  <link rel="stylesheet" href="{{ url_for('static',filename='videoPlayer.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static',filename='icons/fa/css/all.css') }}"/>
+</head>
+
+<body>
+  <div class="container">
+    <div class="c-video">
+      <video id="video" class="video" controls>
+        <!-- <source src="http://10.24.63.83:3000/video?video={{ video }}" type="video/mp4"> -->
+        <!-- <source src="sample.mp4"> -->
+      </video>
+      <div class="controls">
+        <div class="buttons">
+          <!-- <button id="play-pause"></button> -->
+          <i class="fas fa-play"></i>
+          <!-- <i class="fas fa-pause"></i> -->
+        </div>
+        <div class="time-elapsed">
+          00:00:00
+        </div>
+        <div class="red-bar">
+          <div class="red-juice"></div>
+          <div class="white-juice"></div>
+        </div>
+        <div class="time-remaining">
+          00:00:00
+        </div>
+        <div class="volume-button">
+          <i class="fa fa-volume-up" aria-hidden="true"></i>
+          <!-- <i class="fa fa-volume-down" aria-hidden="true"></i> -->
+        </div>
+        <div class="settings">
+          <i class="fa fa-cog" aria-hidden="true"></i>
+        </div>
+      </div>
+      <!-- <div class="center-controls">
+        <i class="fas fa-play"></i>
+      </div> -->
+      
+    </div>
+  </div>
+  <script src="{{ url_for('static',filename='hls.js') }}"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script> -->
+    <script>
+        const videoPlayer = document.getElementById('video');
+        const videoSrc = 'http://192.168.0.109/Dark/{{season}}/{{episode}}/{{episode}}.m3u8';
+
+        if (Hls.isSupported()) {
+          var hlsjsConfig = {
+          "maxBufferSize": 0,
+          "maxBufferLength": 120,
+          "progressive":true
+        }
+            const hls = new Hls(hlsjsConfig);
+            // console.log(hls.audioTracks())
+
+            hls.loadSource(videoSrc);
+            hls.attachMedia(videoPlayer);
+            hls.on(Hls.Events.MANIFEST_PARSED, () => {
+                video.play();
+            });
+        } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
+            videoPlayer.src = videoSrc;
+            videoPlayer.addEventListener('loadedmetadata', () => {
+                videoPlayer.play();
+            });
+        }
+    </script>
+    <script src="{{ url_for('static',filename='videoPlayer.js') }}" ></script>
+</body>
+</html>
