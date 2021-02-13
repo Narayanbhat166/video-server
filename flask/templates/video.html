@@ -12,6 +12,10 @@
       <video id="video" class="video" controls>
         <!-- <source src="http://10.24.63.83:3000/video?video={{ video }}" type="video/mp4"> -->
         <!-- <source src="sample.mp4"> -->
+        <!-- comment below source tag before pushing -->
+        <!-- <source src="{{ url_for('static',filename='S01E01 Secrets.mkv') }}">
+        <source src="{{ url_for('static',filename='S01E01 Secrets mp4 version.mp4') }}">
+        <source src="{{ url_for('static',filename='sample.mp4') }}"> -->
       </video>
       <div class="controls">
         <div class="buttons">
@@ -36,6 +40,10 @@
         <div class="settings">
           <i class="fa fa-cog" aria-hidden="true"></i>
         </div>
+        <div class="fullscreen-btn">
+        	<i class="fas fa-expand-alt"></i>
+        	<!-- <i class="fas fa-compress-alt"></i> -->
+        </div>
       </div>
       <!-- <div class="center-controls">
         <i class="fas fa-play"></i>
@@ -43,8 +51,13 @@
       
     </div>
   </div>
+  <!-- uncomment below script tag before pushing -->
   <script src="{{ url_for('static',filename='hls.js') }}"></script>
+  <!-- do not uncomment below script tag before pushing -->
   <!-- <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script> -->
+
+
+  <!-- uncomment below script tag before pushing -->
     <script>
         const videoPlayer = document.getElementById('video');
         const videoSrc = 'http://192.168.0.109/Dark/{{season}}/{{episode}}/{{episode}}.m3u8';
