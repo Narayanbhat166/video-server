@@ -144,6 +144,31 @@ i {
     line-height: 30px;
 }
 
-::-webkit-media-controls {
+/*::-webkit-media-controls {
     display:none !important;
-  }
+  }*/
+  
+/* The rules for fullscreen button*/
+.fa-expand-alt::before {
+    width: 20px;
+    height: 30px;
+    font-size: 20px;
+    color: #fff;
+    display: inline-block;
+    font-family: 'Font Awesome 5 Free';
+    -webkit-font-smoothing: antialiased;
+    margin: 0px 4px;
+    line-height: 30px;
+}
+
+.fa-compress-alt::before {
+    width: 20px;
+    height: 30px;
+    font-size: 20px;
+    color: #fff;
+    display: inline-block;
+    font-family: 'Font Awesome 5 Free';
+    -webkit-font-smoothing: antialiased;
+    margin: 0px 4px;
+    line-height: 30px;
+}

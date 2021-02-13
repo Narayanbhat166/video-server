@@ -1,23 +1,32 @@
 const video = document.getElementsByClassName("video")[0];
+const videoContainer = document.getElementsByClassName("c-video")[0];
 const juice = document.getElementsByClassName("red-juice")[0];
 const juiceBar = document.getElementsByClassName("red-bar")[0];
 const btn = document.getElementsByClassName("fa-play")[0];
 const tElapsed = document.getElementsByClassName("time-elapsed")[0];
 const tRemaining = document.getElementsByClassName("time-remaining")[0];
 const buffered = document.getElementsByClassName("white-juice")[0];
+const fullBtn = document.getElementsByClassName("fa-expand-alt")[0];
 var isPlaying = false;
+var fullScreenEnabled = !!(document.fullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled || document.webkitSupportsFullscreen || document.webkitFullscreenEnabled || document.createElement('video').webkitRequestFullScreen);
+if (!fullScreenEnabled) {
+   fullscreen.style.display = 'none';
+}
+
+// below line is to remove default controls from showing up in some browsers
+video.removeAttribute("controls");
 
 function togglePlayPause(){
     if(video.paused) {
-        console.log("AUdio: "+video.audioTracks);
+        console.log("Audio: "+video.audioTracks);
         btn.className = "fas fa-pause";
-        var bufferPos = video.buffered;
+        let bufferPos = video.buffered;
         console.log(bufferPos);
         video.play();
         isPlaying = true;
     }else{
         btn.className = "fas fa-play";
-        var bufferPos = video.buffered;
+        let bufferPos = video.buffered;
         console.log(bufferPos);
         video.pause();
         isPlaying = false;
@@ -99,7 +108,28 @@ window.addEventListener('keydown',(event) => {
   } 
 });
 
-video.ondblclick = function() {
-    video.requestFullscreen();
+// The fullscreen functionality
+videoContainer.addEventListener("dblclick", handleFullscreen);
+
+fullBtn.addEventListener("click", handleFullscreen);
+
+function handleFullscreen() {
+  if (isFullScreen()) {
+    if (document.exitFullscreen) document.exitFullscreen();
+    else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+    else if (document.webkitCancelFullScreen) document.webkitCancelFullScreen();
+    else if (document.msExitFullscreen) document.msExitFullscreen();
+    fullBtn.className = "fas fa-expand-alt";
+ }
+ else {
+    if (videoContainer.requestFullscreen) videoContainer.requestFullscreen();
+    else if (videoContainer.mozRequestFullScreen) videoContainer.mozRequestFullScreen();
+    else if (videoContainer.webkitRequestFullScreen) videoContainer.webkitRequestFullScreen();
+    else if (videoContainer.msRequestFullscreen) videoContainer.msRequestFullscreen();
+    fullBtn.className = "fas fa-compress-alt";
+ }
 }
 
+function isFullScreen() {
+  return !!(document.fullscreen || document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement || document.fullscreenElement);
+}
