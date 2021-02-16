@@ -7,6 +7,9 @@ const tElapsed = document.getElementsByClassName("time-elapsed")[0];
 const tRemaining = document.getElementsByClassName("time-remaining")[0];
 const buffered = document.getElementsByClassName("white-juice")[0];
 const fullBtn = document.getElementsByClassName("fa-expand-alt")[0];
+const volBtn = document.getElementsByClassName("fa-volume-up")[0];
+const volJuice = document.getElementsByClassName("volume-juice")[0];
+/*const theControlBar = document.getElementsByClassName("controls")[0];*/
 var isPlaying = false;
 var fullScreenEnabled = !!(document.fullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled || document.webkitSupportsFullscreen || document.webkitFullscreenEnabled || document.createElement('video').webkitRequestFullScreen);
 if (!fullScreenEnabled) {
@@ -14,7 +17,18 @@ if (!fullScreenEnabled) {
 }
 
 // below line is to remove default controls from showing up in some browsers
-video.removeAttribute("controls");
+/*video.removeAttribute("controls");*/
+
+// test script to check if a certain video codec is supported
+function supportType(vidType,codType) { 
+  var x = document.createElement("VIDEO");
+  isSupp = x.canPlayType(vidType+';codecs="'+codType+'"');
+  if (isSupp == "") {
+    isSupp = "No";
+  }
+  return(isSupp);
+  //e.target.parentNode.innerHTML = "Answer: " + isSupp;
+} 
 
 function togglePlayPause(){
     if(video.paused) {
@@ -76,30 +90,32 @@ video.onclick = function() {
 };
 
 window.addEventListener('keydown',(event) => {
-  console.log(event.keyCode); 
+  //console.log(event.keyCode); 
   switch(event.keyCode){
-      case 39: {
-          if(video.currentTime <= video.duration - 10)
-            video.currentTime += 10;
-      }
-      break;
+    case 39: {
+      if(video.currentTime <= video.duration - 10)
+        video.currentTime += 10;
+    }
+    break;
 
-      case 37: {
-          if(video.currentTime >= 10){
-              video.currentTime -= 10;
-          }
-      }
-      break;
+    case 37: {
+      if(video.currentTime >= 10)
+        video.currentTime -= 10;
+    }
+    break;
+
     case 38: {
-        console.log(video.volume);
-        if(video.volume < 1)
-            video.volume += 0.2;
+        if(video.volume < 1) {
+          changeVolume(0.2);
+        }
     }
     break;
     case 40: {
-        console.log(video.volume);
-        if(video.volume >= 0.3)
-            video.volume -= 0.2;
+        if(video.volume >= 0.3) {
+          changeVolume(-0.2);
+        }else {
+          changeVolume(-video.volume);
+        }
     }
     break;
     case 32: {
@@ -109,7 +125,7 @@ window.addEventListener('keydown',(event) => {
 });
 
 // The fullscreen functionality
-videoContainer.addEventListener("dblclick", handleFullscreen);
+video.addEventListener("dblclick", handleFullscreen);
 
 fullBtn.addEventListener("click", handleFullscreen);
 
@@ -132,4 +148,40 @@ function handleFullscreen() {
 
 function isFullScreen() {
   return !!(document.fullscreen || document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement || document.fullscreenElement);
+}
+
+volBtn.onclick = function() {
+  const volSlider = document.getElementsByClassName("volume-slider")[0];
+  const volSliderVis = window.getComputedStyle(volSlider).getPropertyValue("visibility");
+  console.log(volSliderVis);
+  if(volSliderVis == "hidden") {
+    volSlider.style.visibility = "visible";
+  }else {
+    volSlider.style.visibility = "hidden";
+  }
+};
+
+volJuice.setAttribute("value", video.volume);
+
+function changeVolume(val) {  //will decrease volume when negative value is passed
+  video.volume += val;  
+  volJuice.stepUp(val/volJuice.getAttribute("step"));
+  console.log("volume changed to " + video.volume);
+}
+
+volJuice.onchange = function(e) {
+  video.volume = e.target.value;
+  console.log("volume changed to " + video.volume + " by using slider.");
+};
+
+video.onvolumechange = function() {
+  //console.log("Audio muted =" +video.muted);  // video muted property does not change at all !
+  if(video.volume == 0) {
+    volBtn.className = "fas fa-volume-mute";
+    console.log("audio muted");
+  }else if(video.volume < 0.5) {
+    volBtn.className = "fas fa-volume-down";
+  }else {
+    volBtn.className = "fas fa-volume-up";
+  }
 }

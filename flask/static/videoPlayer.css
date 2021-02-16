@@ -123,6 +123,18 @@ body{
     line-height: 30px;
 }
 
+.fa-volume-mute::before {
+    width: 20px;
+    height: 30px;
+    font-size: 20px;
+    color: #fff;
+    display: inline-block;
+    font-family: 'Font Awesome 5 Free';
+    -webkit-font-smoothing: antialiased;
+    margin: 0px 4px;
+    line-height: 30px;
+}
+
 i {
     background: none;
     border: 0px;
@@ -182,4 +194,30 @@ i {
     visibility: visible;
     opacity: 0.7;
     transition: opacity 300ms;
+}
+
+/* the volume slider */
+.volume-slider {
+    width: 30px;
+    height: 100px;
+    color: red;
+    background-color: blue;
+    position: absolute;
+    bottom: 40px;
+    visibility: hidden;
+    display: inline-block;
+    padding: 0;
+}
+
+.volume-button {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.volume-slider input {
+    width: 100px;
+    height: 30px;
+    margin: 0;
+    transform-origin: 50px 50px;
+    transform: rotate(-90deg);
 }
